@@ -61,52 +61,23 @@ class War {
   addSaxon(Saxon) {
     this.saxonArmy.push(Saxon);
   }
-  vikingAttack() {
-    const randomSaxon =
-      this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
-    const randomViking =
-      this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
-    let result = randomSaxon.receiveDamage(randomViking.strength);
-    if (randomSaxon.health <= 0) {
-      const saxonIndex = this.saxonArmy.indexOf(randomSaxon);
-      this.saxonArmy.splice(saxonIndex, 1);
-    }
-    return result;
+
+  getRandomElement(array) {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return array[randomIndex];
   }
 
-  saxonAttack() {
-    const randomSaxon =
-      this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
-    const randomViking =
-      this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
-    let result = randomViking.receiveDamage(randomSaxon.strength);
-    if (randomViking.health <= 0) {
-      const vikingIndex = this.vikingArmy.indexOf(randomViking);
-      this.vikingArmy.splice(vikingIndex, 1);
-    }
-    return result;
-  }
+  performAttack(attacker, target) {
+    const randomAttacker = this.getRandomElement(attacker);
+    const randomTarget = this.getRandomElement(target);
+    const result = randomTarget.receiveDamage(randomAttacker.strength);
 
-  Attack(vikingAttack, saxonAttack) {
-    const randomSaxon =
-      this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
-    const randomViking =
-      this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
-    if (vikingAttack) {
-      let result = randomSaxon.receiveDamage(randomViking.strength);
-      if (randomSaxon.health <= 0) {
-        const saxonIndex = this.saxonArmy.indexOf(randomSaxon);
-        this.saxonArmy.splice(saxonIndex, 1);
-      }
-      return result;
-    } else if (saxonAttack) {
-      let result = randomViking.receiveDamage(randomSaxon.strength);
-      if (randomViking.health <= 0) {
-        const vikingIndex = this.vikingArmy.indexOf(randomViking);
-        this.vikingArmy.splice(vikingIndex, 1);
-      }
-      return result;
+    if (randomTarget.health <= 0) {
+      const targetIndex = target.indexOf(randomTarget);
+      target.splice(targetIndex, 1);
     }
+
+    return result;
   }
 
   showStatus() {
